@@ -1,0 +1,94 @@
+<resources>
+    <string name="app_name">Tukangin</string>
+    <string name="masuk">Masuk</string>
+    <string name="daftar">Daftar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logo">logo</string>
+    <string name="lanjut">Lanjut</string>
+    <string name="mulai">Mulai</string>
+    <string name="subtitle_mulai">Mulai dan temukan fitur yang Anda butuhkan</string>
+    <string name="email">Email</string>
+    <string name="placeholder_email">johndoe@gmail.com</string>
+    <string name="nama_lengkap">Nama lengkap</string>
+    <string name="placeholder_nama_lengkap">John Doe</string>
+    <string name="password">Password</string>
+    <string name="konfirmasi_password">Konfirmasi Password</string>
+    <string name="tombol_keluar">tombol keluar</string>
+    <string name="sudah_punya_akun">Sudah punya akun?</string>
+    <string name="beranda">Beranda</string>
+    <string name="pesanan">Pesanan</string>
+    <string name="pesan">Pesan</string>
+    <string name="profil">Profil</string>
+    <string name="bentuk_oval">bentuk oval</string>
+    <string name="sambutan">Hai, Narotama!</string>
+    <string name="banner">banner</string>
+    <string name="subtitle_home">Pilih layanan sesuai kebutuhan</string>
+    <string name="menu_dekorasi">Dekorasi Rumah</string>
+    <string name="menu_renovasi">Renovasi Rumah</string>
+    <string name="subtitle_penawaran">Dapatkan Harga Spesial</string>
+    <string name="subtitle_berita">Dapatkan berita terupdate</string>
+    <string name="penawaran">Penawaran</string>
+    <string name="lihat_semua">Lihat Semua</string>
+    <string name="berita">Berita</string>
+    <string name="placeholder_penawaran">Penawaran 1</string>
+    <string name="card_overlay">card overlay</string>
+    <string name="banner_renovasi">banner renovasi</string>
+    <string name="tombol_kembali">tombol kembali</string>
+    <string name="subtitle_renovasi">Perbaiki apa pun di Rumah Anda</string>
+    <string name="layanan">Layanan</string>
+    <string name="subtitle_layanan_renovasi">Layanan renovasi rumah kami</string>
+    <string name="tips_renovasi">Tips Renovasi</string>
+    <string name="subtitle_tips_renovasi">Tips merawat lingkungan rumah</string>
+    <string name="subtitle_dekorasi">Ubah rumah Anda menjadi surga</string>
+    <string name="subtitle_layanan_dekorasi">Layanan dekorasi rumah kami</string>
+    <string name="ide_dekorasi">Ide Dekorasi</string>
+    <string name="subtitle_ide_dekorasi">Inspirasi untuk mendekorasi rumah</string>
+    <string name="card_layanan">card layanan</string>
+    <string name="placeholder_layanan">nama layanan</string>
+    <string name="pesanan_anda">Pesanan Anda</string>
+    <string name="dompet">dompet</string>
+    <string name="menunggu_pembayaran">Menunggu Pembayaran</string>
+    <string name="panah_kanan">panah kanan</string>
+    <string name="lingkaran_biru">lingkaran biru</string>
+    <string name="jumlah_pembayaran">1</string>
+    <string name="pesanan_saat_ini">Pesanan saat ini</string>
+    <string name="pesanan_selesai">Pesanan selesai</string>
+    <string name="placeholder_pesanan_kategori">Kategori Layanan</string>
+    <string name="placeholder_pesanan_nama">Nama Pesanan</string>
+    <string name="selesai_pada">Selesai pada:</string>
+    <string name="placeholder_pesanan_tanggal_selesai">Minggu, 13 November 2022</string>
+    <string name="lihat_detail">Lihat Detail</string>
+    <string name="subtitle_menunggu_pembayaran">Segera lakukan pembayaran</string>
+    <string name="bayar_sebelum">Bayar sebelum:</string>
+    <string name="placeholder_chat_pengirim">Asep Suryanto</string>
+    <string name="placeholder_chat_message">Mas, lokasi di mana ya?</string>
+    <string name="placeholder_chat_tanggal">10:21</string>
+    <string name="pesan_dengan_tukang">Pesan dengan Tukang</string>
+    <string name="akun_dan_profil">Akun dan Profil</string>
+    <string name="atur_metode_pembayaran">Atur Metode Pembayaran</string>
+    <string name="atur_alamat">Atur Alamat</string>
+    <string name="laporankan_kesalahan">Laporankan Kesalahan</string>
+    <string name="ajak_teman">Ajak Teman</string>
+    <string name="syarat_dan_ketentuan">Syarat dan Ketentuan</string>
+    <string name="kebijakan_pribadi">Kebijakan Pribadi</string>
+    <string name="keluar">Keluar</string>
+    <string name="narotama_gmail_com">narotama@gmail.com</string>
+    <string name="narotama">Narotama</string>
+    <string name="hapus_akun">Hapus akun</string>
+    <string name="simpan">Simpan</string>
+    <string name="ganti_password">Ganti Password</string>
+    <string name="ganti">Ganti</string>
+    <string name="password_baru">Password Baru</string>
+    <string name="konfirmasi_password_baru">Konfirmasi Password Baru</string>
+    <string name="password_lama">Password Lama</string>
+
+    <string-array name="provinsi">
+        <item>Jawa Barat</item>
+        <item>Jawa Tengah</item>
+        <item>Jawa Timur</item>
+        <item>DKI Jakarta</item>
+        <item>Banten</item>
+    </string-array>
+
+</resources>
