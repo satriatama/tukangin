@@ -43,10 +43,8 @@ public class OrderRecyclerAdapter extends RecyclerView.Adapter<OrderRecyclerAdap
     public void onBindViewHolder(@NonNull OrderRecyclerAdapter.MyViewHolder holder, int position) {
         String name = orderDataList.get(position).getName();
         holder.tvOrderName.setText(name);
-
         String category = orderDataList.get(position).getCategoryService();
         holder.tvCategoryService.setText(category);
-
         LocalDate dateEnd = orderDataList.get(position).getDateEnd();
         holder.tvOrderDateEnd.setText(dateEnd.toString());
     }

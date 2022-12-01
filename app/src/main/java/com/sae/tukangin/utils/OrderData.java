@@ -1,9 +1,10 @@
 package com.sae.tukangin.utils;
 
+import java.security.PrivateKey;
 import java.time.LocalDate;
 
 public class OrderData {
-    private String id;
+    private String order_id;
     private String categoryService;
     private String name;
     private String address;
@@ -15,8 +16,13 @@ public class OrderData {
     private boolean isDone;
     private boolean isPaid;
 
-    public OrderData(String id, String categoryService, String name, String address, int duration, int cost, LocalDate dateEnd){
-        this.id = id;
+
+    private String kategori_name;
+    private String layanan_name;
+    private String order_end;
+
+    public OrderData(String order_id, String categoryService, String name, String address, int duration, int cost, LocalDate dateEnd){
+        this.order_id = order_id;
         this.categoryService = categoryService;
         this.name = name;
         this.address = address;
@@ -29,12 +35,43 @@ public class OrderData {
         //this.isPaid = false;
     }
 
-    public String getId() {
-        return id;
+    public OrderData(String kategori_name, String layanan_name, String order_end,String order_id) {
+        this.kategori_name = kategori_name;
+        this.layanan_name = layanan_name;
+        this.order_end = order_end;
+        this.order_id = order_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getKategori_name() {
+        return kategori_name;
+    }
+
+    public void setKategori_name(String kategori_name) {
+        this.kategori_name = kategori_name;
+    }
+
+    public String getLayanan_name() {
+        return layanan_name;
+    }
+
+    public void setLayanan_name(String layanan_name) {
+        this.layanan_name = layanan_name;
+    }
+
+    public String getOrder_end() {
+        return order_end;
+    }
+
+    public void setOrder_end(String order_end) {
+        this.order_end = order_end;
+    }
+
+    public String getId() {
+        return order_id;
+    }
+
+    public void setId(String order_id) {
+        this.order_id = order_id;
     }
 
     public String getCategoryService() {

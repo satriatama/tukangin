@@ -3,7 +3,7 @@ package com.sae.tukangin;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class IntroManager {
+public class  IntroManager {
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     Context context;

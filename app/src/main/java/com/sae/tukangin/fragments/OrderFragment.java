@@ -1,6 +1,8 @@
 package com.sae.tukangin.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,11 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.sae.tukangin.R;
+import com.sae.tukangin.activities.LoginActivity;
 import com.sae.tukangin.activities.PaymentActivity;
 import com.sae.tukangin.adapters.OrderRecyclerAdapter;
 import com.sae.tukangin.utils.OrderData;
+import com.sae.tukangin.utils.WorkerData;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,14 +45,18 @@ import java.util.ArrayList;
 public class OrderFragment extends Fragment {
     private RecyclerView recyclerActiveOrder, recyclerCompletedOrder;
     private ArrayList<OrderData> activeOrderDataList, completedOrderDataList;
+    TextView tvJmlhMenungguPembayaran;
+    private final Integer id_user;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public OrderFragment() {
+    public OrderFragment(Integer id_user) {
         // Required empty public constructor
+        this.id_user = id_user;
     }
 
     /**
@@ -50,7 +69,7 @@ public class OrderFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static OrderFragment newInstance(String param1, String param2) {
-        OrderFragment fragment = new OrderFragment();
+        OrderFragment fragment = new OrderFragment(Integer.parseInt(param1));
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -81,14 +100,46 @@ public class OrderFragment extends Fragment {
 
         recyclerActiveOrder = view.findViewById(R.id.recyclerActiveOrder);
         recyclerCompletedOrder = view.findViewById(R.id.recyclerCompletedOrder);
-
         activeOrderDataList = new ArrayList<>();
         completedOrderDataList = new ArrayList<>();
 
         setOrderInfo();
         setAdapter();
-
         CardView btnPayment = view.findViewById(R.id.btnPayment);
+
+        //Jumlah menunggu pembayaran didapatkan dari api
+        tvJmlhMenungguPembayaran = view.findViewById(R.id.textView29);
+        String url = "http://192.168.56.1/Tukangin-API/public/api/menungguPembayaranCount";
+        JSONObject params = new JSONObject();
+        System.out.println(id_user);
+        try {
+            params.put("user_id", id_user);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if (response.getString("success").equals("true")) {
+                        System.out.println(response.toString());
+                        tvJmlhMenungguPembayaran.setText(response.getString("data"));
+                    } else {
+                        System.out.println("gagal");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Gagal ambil data");
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(request);
+
         btnPayment.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), PaymentActivity.class);
             startActivity(intent);
@@ -106,8 +157,40 @@ public class OrderFragment extends Fragment {
     }
 
     private void setOrderInfo() {
-        activeOrderDataList.add(new OrderData("order2", "Renovasi Rumah", "Atap", "Bogor", 3, 150000, LocalDate.now()));
-        activeOrderDataList.add(new OrderData("order3", "Dekorasi Rumah", "Pemasangan Furniture", "Bogor", 3, 150000, LocalDate.now()));
+        String url = "http://192.168.56.1/Tukangin-API/public/api/pesananSaatIni";
+        JSONObject params = new JSONObject();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if (response.getString("success").equals("true")) {
+                        JSONArray data = response.getJSONArray("data");
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject order = data.getJSONObject(i);
+                            String kategori_name = order.getString("kategori_name");
+                            String order_id = order.getString("order_id");
+                            String order_end = order.getString("order_end");
+                            String layanan_name = order.getString("layanan_name");
+                            OrderData orderData = new OrderData(kategori_name, layanan_name, order_end, order_id);
+                            activeOrderDataList.add(orderData);
+                        }
+                    } else {
+                        System.out.println("gagal");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Gagal ambil data");
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(request);
+
+
         completedOrderDataList.add(new OrderData("order1", "Dekorasi Rumah", "Pengecatan Tembok", "Bogor", 3, 150000, LocalDate.now()));
     }
 

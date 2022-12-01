@@ -1,6 +1,8 @@
 package com.sae.tukangin.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.sae.tukangin.activities.LoginActivity;
 import com.sae.tukangin.activities.MenuRenovationActivity;
 import com.sae.tukangin.utils.OfferData;
 import com.sae.tukangin.R;
@@ -30,15 +34,19 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
     private RecyclerView recyclerOffer;
     private ArrayList<OfferData> offerDataList;
-
+    TextView tvNama;
+    private String nama;
+    private String token;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public HomeFragment() {
+    public HomeFragment(String nama, String token) {
         // Required empty public constructor
+        this.nama = nama;
+        this.token = token;
     }
 
     /**
@@ -51,7 +59,7 @@ public class HomeFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+        HomeFragment fragment = new HomeFragment(param1, param2);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -79,22 +87,32 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        System.out.println(sharedPreferences.contains("name"));
+        tvNama = view.findViewById(R.id.textView4);
+        tvNama.setText("Hai, " + nama);
         recyclerOffer = view.findViewById(R.id.recyclerOffer);
         offerDataList = new ArrayList<>();
-
         setOfferInfo();
         setAdapter();
 
         CardView btnRenovation = view.findViewById(R.id.btnRenovation);
         btnRenovation.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), MenuRenovationActivity.class);
+            intent.putExtra("kategori_id",2);
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putString("kategori_id", "2");
+            edit.commit();
             startActivity(intent);
         });
 
         CardView btnDecoration = view.findViewById(R.id.btnDecoration);
         btnDecoration.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), MenuDecorationActivity.class);
+            intent.putExtra("kategori_id",1);
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putString("kategori_id", "1");
+            edit.commit();
             startActivity(intent);
         });
     }

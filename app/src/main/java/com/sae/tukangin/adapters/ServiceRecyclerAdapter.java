@@ -1,5 +1,6 @@
 package com.sae.tukangin.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sae.tukangin.R;
+import com.sae.tukangin.activities.MenuRenovationActivity;
+import com.sae.tukangin.activities.PersiapanOrder;
 import com.sae.tukangin.utils.ServiceMenuData;
 
 import java.util.ArrayList;
@@ -35,6 +38,13 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
         ServiceMenuData serviceMenuData = decorationMenuArrayList.get(position);
         holder.tvServiceName.setText(serviceMenuData.getTitle());
         holder.ivServiceImage.setImageResource(serviceMenuData.getImgid());
+        holder.itemView.setOnClickListener(v -> {
+            Integer id = serviceMenuData.getId();
+            Intent intent = new Intent(v.getContext(), PersiapanOrder.class);
+            intent.putExtra("layanan_id", id.toString());
+            intent.putExtra("layanan_nama", serviceMenuData.getTitle());
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override

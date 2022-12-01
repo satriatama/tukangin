@@ -82,7 +82,7 @@
     <string name="password_baru">Password Baru</string>
     <string name="konfirmasi_password_baru">Konfirmasi Password Baru</string>
     <string name="password_lama">Password Lama</string>
-
+    <string name="api_server">http://127.0.0.1:8000/api</string>
     <string-array name="provinsi">
         <item>Jawa Barat</item>
         <item>Jawa Tengah</item>
