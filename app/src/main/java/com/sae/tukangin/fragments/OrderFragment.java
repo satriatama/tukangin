@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sae.tukangin.ApiConnect;
 import com.sae.tukangin.R;
 import com.sae.tukangin.activities.LoginActivity;
 import com.sae.tukangin.activities.PaymentActivity;
@@ -109,9 +110,8 @@ public class OrderFragment extends Fragment {
 
         //Jumlah menunggu pembayaran didapatkan dari api
         tvJmlhMenungguPembayaran = view.findViewById(R.id.textView29);
-        String url = "http://192.168.56.1/Tukangin-API/public/api/menungguPembayaranCount";
+        String url = ApiConnect.BASE_URL +"/menungguPembayaranCount";
         JSONObject params = new JSONObject();
-        System.out.println(id_user);
         try {
             params.put("user_id", id_user);
         } catch (JSONException e) {
@@ -122,7 +122,6 @@ public class OrderFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 try {
                     if (response.getString("success").equals("true")) {
-                        System.out.println(response.toString());
                         tvJmlhMenungguPembayaran.setText(response.getString("data"));
                     } else {
                         System.out.println("gagal");
@@ -157,41 +156,47 @@ public class OrderFragment extends Fragment {
     }
 
     private void setOrderInfo() {
-        String url = "http://192.168.56.1/Tukangin-API/public/api/pesananSaatIni";
+        String url = ApiConnect.BASE_URL + "/pesananSaatIniJoin";
         JSONObject params = new JSONObject();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    if (response.getString("success").equals("true")) {
-                        JSONArray data = response.getJSONArray("data");
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject order = data.getJSONObject(i);
-                            String kategori_name = order.getString("kategori_name");
-                            String order_id = order.getString("order_id");
-                            String order_end = order.getString("order_end");
-                            String layanan_name = order.getString("layanan_name");
-                            OrderData orderData = new OrderData(kategori_name, layanan_name, order_end, order_id);
-                            activeOrderDataList.add(orderData);
+        try {
+            params.put("user_id", id_user);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if (response.getString("success").equals("true")) {
+                            JSONArray data = response.getJSONArray("data");
+                            for (int i = 0; i < data.length(); i++) {
+                                JSONObject order = data.getJSONObject(i);
+                                String kategori_name = order.getString("kategori_name");
+                                String order_id = order.getString("order_id");
+                                String order_end = order.getString("order_end");
+                                String layanan_name = order.getString("layanan_name");
+                                String user_id = order.getString("user_id");
+                                OrderData orderData = new OrderData(kategori_name, layanan_name, order_end, order_id, user_id);
+                                activeOrderDataList.add(orderData);
+                            }
+                            setAdapter();
+                        } else {
+                            System.out.println("gagal");
                         }
-                    } else {
-                        System.out.println("gagal");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("Gagal ambil data");
-            }
-        });
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        queue.add(request);
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("Gagal ambil data");
+                }
+            });
+            RequestQueue queue = Volley.newRequestQueue(getContext());
+            queue.add(request);
 
 
-        completedOrderDataList.add(new OrderData("order1", "Dekorasi Rumah", "Pengecatan Tembok", "Bogor", 3, 150000, LocalDate.now()));
-    }
-
+            completedOrderDataList.add(new OrderData("order1", "Dekorasi Rumah", "Pengecatan Tembok", "Bogor", 3, 150000, LocalDate.now()));
+        }
 }

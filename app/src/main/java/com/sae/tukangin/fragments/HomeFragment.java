@@ -124,9 +124,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void setOfferInfo() {
-        offerDataList.add(new OfferData("Gratis chat warna hijau miskin"));
-        offerDataList.add(new OfferData("Minimal kamar ada pintunya lah"));
-        offerDataList.add(new OfferData("Rumah kok kayu"));
-        offerDataList.add(new OfferData("Sprei jamet item kotak2 putih"));
+        offerDataList.add(new OfferData("Gratis cat hijau muda"));
+        offerDataList.add(new OfferData("Gratis pemasangan pintu"));
+        offerDataList.add(new OfferData("Gratis dekorasi rumah"));
+        offerDataList.add(new OfferData("Tawaran terbatas"));
     }
 }

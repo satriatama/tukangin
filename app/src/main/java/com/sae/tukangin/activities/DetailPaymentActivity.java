@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sae.tukangin.ApiConnect;
 import com.sae.tukangin.R;
 import com.sae.tukangin.utils.OrderData;
 
@@ -49,7 +50,7 @@ public class DetailPaymentActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String url = "http://192.168.56.1/Tukangin-API/public/api/menungguPembayaranJoinById";
+        String url = ApiConnect.BASE_URL +"/menungguPembayaranJoinById";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -87,7 +88,7 @@ public class DetailPaymentActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            String url1 = "http://192.168.56.1/Tukangin-API/public/api/pembayaran";
+            String url1 = ApiConnect.BASE_URL +"/pembayaran";
             JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.POST, url1, params1, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {

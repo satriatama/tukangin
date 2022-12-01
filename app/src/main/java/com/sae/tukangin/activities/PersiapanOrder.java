@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sae.tukangin.ApiConnect;
 import com.sae.tukangin.R;
 
 import org.json.JSONException;
@@ -45,7 +46,7 @@ public class PersiapanOrder extends AppCompatActivity {
         kurangHari = findViewById(R.id.imageView40);
         harga = findViewById(R.id.textView63);
         btnOrder = findViewById(R.id.button5);
-        String url = "http://192.168.56.1/Tukangin-API/public/api/getLayanan";
+        String url = ApiConnect.BASE_URL +"/getLayanan";
         SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString("id", null);
         Intent in = getIntent();
@@ -78,22 +79,25 @@ public class PersiapanOrder extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(PersiapanOrder.this);
         queue.add(request);
 
+        Integer harga_layanan = Integer.parseInt(harga.getText().toString());
 
         tambahHari.setOnClickListener(v -> {
             int jumlah = Integer.parseInt(jumlahHari.getText().toString());
             jumlah++;
             jumlahHari.setText(String.valueOf(jumlah));
-            harga.setText(String.valueOf(Integer.parseInt(harga.getText().toString()) * Integer.parseInt(jumlahHari.getText().toString())));
+            int i = Integer.parseInt(harga.getText().toString()) + harga_layanan;
+            harga.setText(String.valueOf(i));
         });
         kurangHari.setOnClickListener(v -> {
             int jumlah = Integer.parseInt(jumlahHari.getText().toString());
             jumlah--;
             jumlahHari.setText(String.valueOf(jumlah));
-            harga.setText(String.valueOf(Integer.parseInt(harga.getText().toString()) * Integer.parseInt(jumlahHari.getText().toString())));
+            int i = Integer.parseInt(harga.getText().toString()) - harga_layanan;
+            harga.setText(String.valueOf(i));
         });
 
         btnOrder.setOnClickListener(view -> {
-            String url1 = "http://192.168.56.1/Tukangin-API/public/api/pemesanan";
+            String url1 = ApiConnect.BASE_URL +"/pemesanan";
             JSONObject params1 = new JSONObject();
             try {
                 params1.put("layanan_id", Integer.parseInt(idLayanan));
@@ -111,7 +115,6 @@ public class PersiapanOrder extends AppCompatActivity {
                     try {
                         Intent intent = new Intent(PersiapanOrder.this, ChooseWorkerActivity.class);
                         intent.putExtra("order_id", response.getJSONObject("data").getInt("order_id"));
-                        System.out.println(response.getJSONObject("data").getInt("order_id")+ " di dalam persiapan order");
                         startActivity(intent);
                     } catch (Exception e) {
                         System.out.println("Yahh eror");

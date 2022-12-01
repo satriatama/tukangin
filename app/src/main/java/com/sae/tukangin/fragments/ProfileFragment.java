@@ -1,6 +1,8 @@
 package com.sae.tukangin.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,10 +13,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.sae.tukangin.R;
 import com.sae.tukangin.activities.AccountActivity;
 import com.sae.tukangin.activities.AddressSetupActivity;
+import com.sae.tukangin.activities.LoginActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,5 +93,13 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         });
 
+
+        TextView nama = view.findViewById(R.id.textView31);
+        TextView email = view.findViewById(R.id.textView32);
+        SharedPreferences sharedpreferences = getContext().getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        String email1 = sharedpreferences.getString("email", null);
+        String nama1 = sharedpreferences.getString("name", null);
+        nama.setText(nama1);
+        email.setText(email1);
     }
 }

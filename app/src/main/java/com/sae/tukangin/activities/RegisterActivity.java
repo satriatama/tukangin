@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sae.tukangin.ApiConnect;
 import com.sae.tukangin.ApiManager;
 import com.sae.tukangin.R;
 
@@ -52,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.btnRegister:
                 JSONObject params = new JSONObject();
-                String url = "http://192.168.56.1/Tukangin-API/public/api/register";
+                String url = ApiConnect.BASE_URL +"/register";
                 try {
                     params.put("name", etName.getText().toString());
                     params.put("email", etEmail.getText().toString());

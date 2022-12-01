@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sae.tukangin.ApiConnect;
 import com.sae.tukangin.R;
 import com.sae.tukangin.adapters.ServiceRecyclerAdapter;
 import com.sae.tukangin.adapters.WorkerRecyclerAdapter;
@@ -62,7 +63,7 @@ public class ChooseWorkerActivity extends AppCompatActivity {
 
     private void setWorkerInfo() {
         JSONObject params = new JSONObject();
-        String url = "http://192.168.56.1/Tukangin-API/public/api/showTukang";
+        String url = ApiConnect.BASE_URL +"/showTukang";
         SharedPreferences sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         try {
             params.put("kategori_id",sharedPreferences.getString("kategori_id", null));

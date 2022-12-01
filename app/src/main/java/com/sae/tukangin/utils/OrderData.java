@@ -20,6 +20,7 @@ public class OrderData {
     private String kategori_name;
     private String layanan_name;
     private String order_end;
+    private String user_id;
 
     public OrderData(String order_id, String categoryService, String name, String address, int duration, int cost, LocalDate dateEnd){
         this.order_id = order_id;
@@ -35,10 +36,27 @@ public class OrderData {
         //this.isPaid = false;
     }
 
-    public OrderData(String kategori_name, String layanan_name, String order_end,String order_id) {
+    public OrderData(String kategori_name, String layanan_name, String order_end,String order_id, String user_id) {
         this.kategori_name = kategori_name;
         this.layanan_name = layanan_name;
         this.order_end = order_end;
+        this.order_id = order_id;
+        this.user_id = user_id;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
         this.order_id = order_id;
     }
 

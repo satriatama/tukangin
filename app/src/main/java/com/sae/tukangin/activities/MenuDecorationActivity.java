@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sae.tukangin.ApiConnect;
 import com.sae.tukangin.R;
 import com.sae.tukangin.utils.ServiceMenuData;
 import com.sae.tukangin.adapters.ServiceRecyclerAdapter;
@@ -63,7 +64,7 @@ public class MenuDecorationActivity extends AppCompatActivity {
 
     private void setMenuDecorationInfo() {
         JSONObject params = new JSONObject();
-        String url = "http://192.168.56.1/Tukangin-API/public/api/showLayanan";
+        String url = ApiConnect.BASE_URL +"/showLayanan";
         try {
             params.put("kategori_id",getIntent().getIntExtra("kategori_id",0));
         } catch (Exception e) {

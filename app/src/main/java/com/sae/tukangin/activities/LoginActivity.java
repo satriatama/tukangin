@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sae.tukangin.ApiConnect;
 import com.sae.tukangin.R;
 
 import org.json.JSONException;
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(view -> {
             JSONObject params = new JSONObject();
-            String url = "http://192.168.56.1/Tukangin-API/public/api/login";
+            String url = ApiConnect.BASE_URL +"/login";
             try {
                 params.put("email", etEmail.getText().toString());
                 params.put("password", etPassword.getText().toString());
@@ -66,10 +67,10 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("name", response.getJSONObject("data").getString("name"));
                             sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-
                             editor.putString("name", response.getJSONObject("data").getString("name"));
                             editor.putString("token", response.getJSONObject("data").getString("token"));
                             editor.putString("id", response.getJSONObject("data").getString("id"));
+                            editor.putString("email", etEmail.getText().toString());
                             System.out.println("id login "+response.getJSONObject("data").getString("id"));
                             editor.commit();
                             startActivity(intent);

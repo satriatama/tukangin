@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sae.tukangin.ApiConnect;
 import com.sae.tukangin.R;
 import com.sae.tukangin.activities.ChooseWorkerActivity;
 import com.sae.tukangin.activities.MainActivity;
@@ -59,7 +60,7 @@ public class WorkerRecyclerAdapter extends RecyclerView.Adapter<WorkerRecyclerAd
         holder.ivWorkerImage.setImageResource(workerData.getImgId());
         holder.itemView.setOnClickListener(v -> {
             //change tukang order
-            String url = "http://192.168.56.1/Tukangin-API/public/api/changeTukangOrder";
+            String url = ApiConnect.BASE_URL +"/changeTukangOrder";
             Integer tukang_id = workerData.getId();
             Integer order_id = workerData.getOrder_id();
             System.out.println("tukang_id: " + tukang_id);

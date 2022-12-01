@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sae.tukangin.ApiConnect;
 import com.sae.tukangin.R;
 import com.sae.tukangin.activities.DetailPaymentActivity;
 import com.sae.tukangin.activities.MainActivity;
@@ -67,7 +68,7 @@ public class PaymentRecyclerAdapter extends RecyclerView.Adapter<PaymentRecycler
 
         holder.btlknPesanan.setOnClickListener(view -> {
             //change tukang order
-            String url = "http://192.168.56.1/Tukangin-API/public/api/batalkanPesanan";
+            String url = ApiConnect.BASE_URL +"/batalkanPesanan";
             JSONObject params = new JSONObject();
             try {
                 params.put("order_id", orderDataList.get(position).getId());

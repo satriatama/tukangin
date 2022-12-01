@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sae.tukangin.ApiConnect;
 import com.sae.tukangin.R;
 import com.sae.tukangin.adapters.OrderRecyclerAdapter;
 import com.sae.tukangin.adapters.PaymentRecyclerAdapter;
@@ -63,7 +64,9 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void setPembayaranInfo() {
         JSONObject params = new JSONObject();
-        String url = "http://192.168.56.1/Tukangin-API/public/api/menungguPembayaranJoin";
+        SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        String id = sharedpreferences.getString("id", null);
+        String url = ApiConnect.BASE_URL +"/menungguPembayaranJoin";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -76,7 +79,7 @@ public class PaymentActivity extends AppCompatActivity {
                               String layanan_name = payment.getString("layanan_name");
                               String order_id = payment.getString("order_id");
                               String order_end = payment.getString("order_end");
-                                orderDataList.add(new OrderData(kategori_name, layanan_name, order_end,order_id));
+                                orderDataList.add(new OrderData(kategori_name, layanan_name, order_end,order_id,id));
                         }
                         setAdapter();
                     } else {
