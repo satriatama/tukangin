@@ -119,17 +119,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView55" />
 
             <TextView
-                android:id="@+id/textView61"
-                style="@style/LabelText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
-                android:text="Jenis Pembayaran"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView1" />
-
-            <TextView
                 android:id="@+id/textView53"
                 style="@style/LabelText"
                 android:layout_width="wrap_content"
@@ -139,30 +128,6 @@
                 android:text="Tanggal Mulai"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etLayoutPaymentMethod"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="32dp"
-                android:textColorHint="@color/grey"
-                app:hintEnabled="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView61">
-
-                <Spinner
-                    android:id="@+id/spinnerPaymentMethod"
-                    android:layout_width="match_parent"
-                    android:background="@drawable/grey_rounded_shape"
-                    android:layout_height="match_parent"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etLayoutDateStart"
@@ -180,11 +145,15 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDateStart"
+                    android:clickable="true"
+                    android:cursorVisible="false"
+                    android:editable="false"
+                    android:inputType="none"
+                    android:singleLine="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_rounded"
-                    android:hint="00/00/00"
-                    android:inputType="date" />
+                    android:hint="2022-01-01" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -220,12 +189,14 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
                 app:cardMaxElevation="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView58">
+                app:layout_constraintTop_toBottomOf="@+id/textView58"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -245,20 +216,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView60"
-                        style="@style/BodyText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="16dp"
-                        android:text="Pilih alamat lain"
-                        android:textColor="@color/primary"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView59" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>

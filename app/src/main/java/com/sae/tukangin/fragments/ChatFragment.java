@@ -1,5 +1,7 @@
 package com.sae.tukangin.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +13,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.sae.tukangin.ApiConnect;
 import com.sae.tukangin.R;
+import com.sae.tukangin.activities.LoginActivity;
+import com.sae.tukangin.activities.MenuDecorationActivity;
 import com.sae.tukangin.adapters.ChatRecyclerAdapter;
 import com.sae.tukangin.adapters.OrderRecyclerAdapter;
 import com.sae.tukangin.utils.ChatData;
 import com.sae.tukangin.utils.OrderData;
+import com.sae.tukangin.utils.ServiceMenuData;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -92,7 +109,43 @@ public class ChatFragment extends Fragment {
     }
 
     private void setChatInfo() {
-        chatDataList.add(new ChatData("Tukang 1", new String[]{"Pesan 1", "Kapan jadinya?"}, LocalDate.of(2021, 1, 1)));
-        chatDataList.add(new ChatData("Tukang 2", new String[]{"Pesan 2", "Rumahnya di mana?"}, LocalDate.of(2021, 1, 1)));
-    }
+        JSONObject params = new JSONObject();
+        String url = ApiConnect.BASE_URL +"/getTukangByUserOrder";
+        SharedPreferences sharedpreferences = getActivity().getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        String user_id = sharedpreferences.getString("id", null);
+        try {
+            params.put("user_id", user_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    System.out.println(response.getString("data"));
+                    if (response.getString("success").equals("true")) {
+                        JSONArray data = response.getJSONArray("data");
+//                        JSONArray data = dataObj.getJSONArray("data");
+                        System.out.println(data.toString());
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject service = data.getJSONObject(i);
+                            chatDataList.add(new ChatData(service.getString("tukang_name"),service.getString("layanan_name"), R.drawable.white_solid, i, service.getString("tukang_id")));
+                        }
+                        setAdapter();
+                    } else {
+                        System.out.println("gagal");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(request);
+            }
 }

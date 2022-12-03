@@ -1,14 +1,17 @@
 package com.sae.tukangin.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sae.tukangin.R;
+import com.sae.tukangin.activities.DetailChatActivity;
 import com.sae.tukangin.utils.ChatData;
 
 import java.time.LocalDate;
@@ -22,13 +25,14 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvChatSender, tvChatLastMessage, tvChatDate;
+        private final TextView tvChatSender, tvChatLastMessage;
+        private final ConstraintLayout constChat;
 
         public MyViewHolder(final View view) {
             super(view);
             tvChatSender = view.findViewById(R.id.tvChatSender);
             tvChatLastMessage = view.findViewById(R.id.tvChatLastMessage);
-            tvChatDate = view.findViewById(R.id.tvChatDate);
+            constChat = view.findViewById(R.id.constId);
         }
     }
 
@@ -41,14 +45,17 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ChatRecyclerAdapter.MyViewHolder holder, int position) {
-        String sender = chatDataList.get(position).getSender();
+        String sender = chatDataList.get(position).getTukang_name();
         holder.tvChatSender.setText(sender);
-
-        String lastMessage = chatDataList.get(position).getLastMessage();
+        String lastMessage = chatDataList.get(position).getLayanan_name();
         holder.tvChatLastMessage.setText(lastMessage);
-
-        LocalDate date = chatDataList.get(position).getDate();
-        holder.tvChatDate.setText(date.toString());
+        holder.constChat.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), DetailChatActivity.class);
+            intent.putExtra("id_chat", chatDataList.get(position).getId_chat());
+            intent.putExtra("tukang_name", chatDataList.get(position).getTukang_name());
+            intent.putExtra("tukang_id", chatDataList.get(position).getTukang_id());
+            view.getContext().startActivity(intent);
+        });
     }
 
     @Override

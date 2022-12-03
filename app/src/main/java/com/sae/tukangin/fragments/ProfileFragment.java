@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sae.tukangin.R;
@@ -93,6 +94,16 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         });
 
+        ImageView logout = view.findViewById(R.id.imageView38);
+        logout.setOnClickListener(v -> {
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        });
 
         TextView nama = view.findViewById(R.id.textView31);
         TextView email = view.findViewById(R.id.textView32);

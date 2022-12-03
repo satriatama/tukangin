@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,10 +42,14 @@ public class ChooseWorkerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_worker);
-
         recyclerWorker =  findViewById(R.id.recyclerPilihTukang);
-
         workerDataArrayList = new ArrayList<>();
+
+        ImageView tvBack = findViewById(R.id.imageView42);
+        tvBack.setOnClickListener(v -> {
+            Intent intent = new Intent(ChooseWorkerActivity.this, PersiapanOrder.class);
+            startActivity(intent);
+        });
 
         setWorkerInfo();
         setAdapter();

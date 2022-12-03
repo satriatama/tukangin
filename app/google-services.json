@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "661892677287",
+    "project_id": "chat-app-tukangin",
+    "storage_bucket": "chat-app-tukangin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661892677287:android:609693be4a5290c93a6582",
+        "android_client_info": {
+          "package_name": "com.sae.tukangin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "661892677287-1ol93jf84m7n59grtn5u46o32eojp76t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAn3GcsIhrtlBTVKzIeWRA8jtUxr4RoGVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "661892677287-1ol93jf84m7n59grtn5u46o32eojp76t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

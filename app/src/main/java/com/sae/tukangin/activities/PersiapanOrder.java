@@ -2,11 +2,13 @@ package com.sae.tukangin.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -25,13 +27,19 @@ import com.sae.tukangin.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class PersiapanOrder extends AppCompatActivity {
 
-    TextView kategori, layanan, harga, jumlahHari;
+    TextView kategori, layanan, harga, jumlahHari, tanggalMulai;
     Spinner jenisPembayaran;
-    EditText tanggalMulai, alamat;
+    EditText alamat;
     ImageView tambahHari, kurangHari;
     Button btnOrder;
+    final Calendar myCalendar = Calendar.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,22 +49,38 @@ public class PersiapanOrder extends AppCompatActivity {
         tanggalMulai = findViewById(R.id.etDateStart);
         jumlahHari = findViewById(R.id.textView55);
         alamat = findViewById(R.id.textView59);
-        jenisPembayaran = findViewById(R.id.spinnerPaymentMethod);
         tambahHari = findViewById(R.id.imageView41);
         kurangHari = findViewById(R.id.imageView40);
         harga = findViewById(R.id.textView63);
         btnOrder = findViewById(R.id.button5);
-        String url = ApiConnect.BASE_URL +"/getLayanan";
+        String url = ApiConnect.BASE_URL + "/getLayanan";
         SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString("id", null);
-        Intent in = getIntent();
 
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+        };
+        tanggalMulai.setOnClickListener(view -> {
+            new DatePickerDialog(PersiapanOrder.this, date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+        });
+
+        Intent in = getIntent();
         //get intent from previous activity
         String idLayanan = in.getStringExtra("layanan_id");
         JSONObject params = new JSONObject();
         try {
             params.put("layanan_id", Integer.parseInt(idLayanan));
-        }catch (JSONException e){
+        } catch (JSONException e) {
             System.out.println(e);
         }
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
@@ -97,7 +121,7 @@ public class PersiapanOrder extends AppCompatActivity {
         });
 
         btnOrder.setOnClickListener(view -> {
-            String url1 = ApiConnect.BASE_URL +"/pemesanan";
+            String url1 = ApiConnect.BASE_URL + "/pemesanan";
             JSONObject params1 = new JSONObject();
             try {
                 params1.put("layanan_id", Integer.parseInt(idLayanan));
@@ -106,7 +130,7 @@ public class PersiapanOrder extends AppCompatActivity {
                 params1.put("order_address", alamat.getText().toString());
                 params1.put("order_time", jumlahHari.getText().toString());
                 params1.put("order_price", harga.getText().toString());
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 System.out.println(e);
             }
             JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.POST, url1, params1, new Response.Listener<JSONObject>() {
@@ -130,5 +154,10 @@ public class PersiapanOrder extends AppCompatActivity {
             RequestQueue queue1 = Volley.newRequestQueue(PersiapanOrder.this);
             queue1.add(request1);
         });
+    }
+    private void updateLabel() {
+        String myFormat = "yyyy/MM/dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        tanggalMulai.setText(sdf.format(myCalendar.getTime()));
     }
 }
